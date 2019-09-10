@@ -1,0 +1,35 @@
+{
+  "name": "kungfu-core",
+  "author": "taurus.ai",
+  "version": "2.0.0",
+  "description": "KungFu Trader Core",
+  "license": "Apache-2.0",
+  "main": "node/index.js",
+  "config": {
+    "buildtype": "Release",
+    "loglevel": "trace",
+    "arch": "x64",
+    "runtime": "electron",
+    "node": "10.16.0",
+    "electron": "5.0.10"
+  },
+  "scripts": {
+    "install-deps": "pipenv --three install -d",
+    "build": "yarn run build:cpp && yarn run build:pyi",
+    "build:cpp": "cross-var pipenv run python python/build.py --build_type $npm_package_config_buildtype -l $npm_package_config_loglevel --arch $npm_package_config_arch --runtime $npm_package_config_runtime --node_version $npm_package_config_node --electron_version $npm_package_config_electron make",
+    "build:pyi": "cross-var pipenv run python python/build.py --build_type $npm_package_config_buildtype -l $npm_package_config_loglevel --arch $npm_package_config_arch --runtime $npm_package_config_runtime --node_version $npm_package_config_node --electron_version $npm_package_config_electron package",
+    "configure": "cross-var pipenv run python python/build.py --build_type $npm_package_config_buildtype -l $npm_package_config_loglevel --arch $npm_package_config_arch --runtime $npm_package_config_runtime --node_version $npm_package_config_node --electron_version $npm_package_config_electron configure",
+    "clean": "cmake-js clean",
+    "dev": "pipenv run python python/dev_run.py",
+    "test": "pipenv run python python/dev_test.py"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "nan": "^2.14.0"
+  },
+  "devDependencies": {
+    "cmake-js": "^5.3.1",
+    "cross-env": "^5.0.5",
+    "cross-var": "^1.1.0"
+  }
+}
